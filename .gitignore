@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.DS_Store
+# Raw data is not redistributed here — see data/raw/README.md
+data/raw/*.csv

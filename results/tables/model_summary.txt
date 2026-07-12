@@ -1,0 +1,4 @@
+AUC=0.331
+Accuracy=0.444
+ConfusionMatrix=[[20, 11], [19, 4]]
+Features=['pct_total_immune', 'pct_CD8_T', 'density_CD8_T_per_1000px2', 'CD8T_to_Tumor_meanNND', 'CD8T_to_Myeloid_meanNND', 'immune_selfclustering_meanNND', 'immune_RipleyK_clustering_index', 'PDL1_mean_tumor', 'PDL1_mean_immune', 'pct_Tumor', 'age_at_dx_tertile', 'no_CD8T_or_Tumor_detected']
