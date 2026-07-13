@@ -84,4 +84,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-Add clear error message for corrupted CSV input
