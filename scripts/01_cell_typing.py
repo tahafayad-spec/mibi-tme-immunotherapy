@@ -48,8 +48,27 @@ def classify(row):
     return 'Unclassified'
 
 
+def validate_input(prot, path):
+    """Fail early with a clear message if the CSV was corrupted (e.g. by being
+    opened and re-saved in Excel/Numbers/Google Sheets, which can mangle CSV
+    quoting and merge all columns into one)."""
+    missing = [m for m in LINEAGE_MARKERS if m not in prot.columns]
+    if missing:
+        raise SystemExit(
+            f"\n[DATA ERROR] '{path}' is missing expected marker columns: {missing}\n"
+            f"Found only {len(prot.columns)} column(s); the first is: {prot.columns[0]!r}\n\n"
+            "This almost always means the CSV was opened and re-saved in a spreadsheet\n"
+            "app (Excel, Numbers, Google Sheets) before uploading, which can corrupt the\n"
+            "quoting and merge all columns into one.\n\n"
+            "Fix: re-download the file fresh from Mendeley "
+            "(https://doi.org/10.17632/79y7bht7tf.1), do NOT open it in any spreadsheet\n"
+            "app, and re-upload it as-is.\n"
+        )
+
+
 def main():
     prot = pd.read_csv(f"{RAW}/cell_protein_data.csv")
+    validate_input(prot, f"{RAW}/cell_protein_data.csv")
 
     thresholds = prot[LINEAGE_MARKERS].quantile(POSITIVITY_PERCENTILE)
     pos = prot[LINEAGE_MARKERS] > thresholds
@@ -65,3 +84,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+Add clear error message for corrupted CSV input
